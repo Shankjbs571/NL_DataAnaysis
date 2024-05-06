@@ -3,8 +3,20 @@ from bs4 import BeautifulSoup
 import requests
 import os
 
+from dotenv import load_dotenv
+import os
 
-df = pd.read_excel("/content/drive/MyDrive/Colab Notebooks/Data/Output Data Structure.xlsx")
+# Load environment variables from .env file
+load_dotenv()
+
+
+# Path to output Excel file
+OUTPUT_XLSX_FILE = os.getenv('OUTPUT_XLSX_FILE')
+
+# Path to article text file directory
+ARTICLE_DIR = os.getenv('ARTICLE_DIR')
+
+df = pd.read_excel(OUTPUT_XLSX_FILE)
 
 # Function to scrape article title and text
 # Website structure was analyzed and classes were identified accordingly to extract the title and article text
@@ -28,7 +40,7 @@ def scrape_title_article(link):
 
 #function to create the text files and save on the specified directory
 def create_txt_and_save(filename, title, article):
-  output_dir="/content/drive/MyDrive/Colab Notebooks/Data/BlackcofferDataExtraction_Analysis/Articles_txt_files"
+  output_dir=ARTICLE_DIR
   filename = f"{filename}.txt"
   file_path = os.path.join(output_dir, filename)
   with open(file_path, 'w') as file:
